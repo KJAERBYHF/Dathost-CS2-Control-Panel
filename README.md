@@ -30,3 +30,5 @@ alias "Inferno" "Map de_Inferno"*
 
 4. Enjoy
 
+### Credits
+Based on this https://github.com/Nafalgar/dathost-discord-bot
