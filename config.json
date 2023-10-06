@@ -1,0 +1,5 @@
+{
+    "USER": "dathost login name",
+    "PASSWORD": "dathost password",
+    "SERVERID": "dathost serverID"
+}
