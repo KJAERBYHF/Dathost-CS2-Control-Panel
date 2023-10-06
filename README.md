@@ -1,3 +1,7 @@
+### Welcome
+
+This is just a small project made because of RCON not working in CS2 as of right now.
+
 ### Features
 
 - Start & Stop Server
