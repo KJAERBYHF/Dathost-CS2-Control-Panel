@@ -1,6 +1,7 @@
 ### Welcome
 
 This is just a small project made because of RCON not working in CS2 as of right now.
+Code might not be optimal but it get's the work done.
 
 ### Features
 
