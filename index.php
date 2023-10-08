@@ -9,9 +9,6 @@ $serverid = $config['SERVERID'];
 function makeApiRequest($url, $method = 'GET', $data = [], $headers = []) {
     global $username, $password;
 
-
-    
-    
     $ch = curl_init($url);
 
     // Set cURL options
@@ -70,12 +67,11 @@ function makeApiRequestWithFormData($url, $method = 'GET', $data = [], $headers 
     return $response;
 }
 
-
 function handleApiResponse($message, $response) {
     if ($response === false) {
-        echo "$message. HTTP request failed.";
+        echo "Error sending the command.";
     } else {
-        echo "$message. Response: $response";
+        echo "Command has been sent.";
     }
 }
 
@@ -88,9 +84,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         handleApiResponse("Server stop request sent", $response);
     } elseif (isset($_POST['exec'])) {
         $command = $_POST['execCommand'];
-        $data = ['line' => $command];
+
+        // Check for special commands and set the appropriate server command
+        switch (strtolower($command)) {
+            case 'anubis':
+                $serverCommand = 'map de_anubis';
+                break;
+            case 'nuke':
+                $serverCommand = 'map de_nuke';
+                break;
+            case 'inferno':
+                $serverCommand = 'map de_inferno';
+                break;
+            case 'mirage':
+                $serverCommand = 'map de_mirage';
+                break;
+            case 'ancient':
+                $serverCommand = 'map de_ancient';
+                break;
+            case 'vertigo':
+                $serverCommand = 'map de_vertigo';
+                break;
+            case 'overpass':
+                $serverCommand = 'map de_overpass';
+                break;
+            case 'live':
+                $serverCommand = 'exec live; say Scrim Enabled';
+                break;
+            case 'prac':
+                $serverCommand = 'exec prac; say Prac Mode Enabled';
+                break;
+            case 'full':
+                $serverCommand = 'mp_match_can_clinch 0; say Full Match Enabled';
+                break;
+            default:
+                $serverCommand = $command; // Use the original command if no match is found
+                break;
+        }
+
+        $data = ['line' => $serverCommand];
         $response = makeApiRequestWithFormData("https://dathost.net/api/0.1/game-servers/$serverid/console", 'POST', $data);
-        handleApiResponse("Executed command: $command", $response);
+        handleApiResponse("Executed command: $serverCommand", $response);
     }
 }
 ?>
